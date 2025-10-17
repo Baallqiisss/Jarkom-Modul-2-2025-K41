@@ -1,5 +1,5 @@
 # Eonwe
-echo "nameserver 192.168.122.1" > /etc/resolv.conf
+
 
 auto eth0
 iface eth0 inet dhcp
@@ -18,8 +18,6 @@ auto eth3
 iface eth3 inet static
     address 10.84.3.1
     netmask 255.255.255.0
-
-
 
 # earendil
 auto eth0
@@ -40,9 +38,9 @@ iface eth0 inet static
 # cirdan
 auto eth0
 iface eth0 inet static
-    address 10.84.2.2
+    address 10.84.3.1
     netmask 255.255.255.0
-    gateway 10.84.2.1
+    gateway 10.84.3.1
     up echo nameserver 192.168.122.1 > /etc/resolv.conf
 
 # Elrond

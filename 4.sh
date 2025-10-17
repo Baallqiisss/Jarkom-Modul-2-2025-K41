@@ -62,7 +62,7 @@ nano /etc/resolv.conf
 
 nameserver 10.84.2.5
 nameserver 10.84.2.7
-nameserver 192.168.122.1
+nameserver 192.168.122.1 #sirion
 
 #tes
 ping K41.com

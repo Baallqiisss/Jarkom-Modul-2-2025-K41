@@ -64,4 +64,7 @@ nameserver 10.84.2.5
 nameserver 10.84.2.7
 nameserver 192.168.122.1
 
+#tes
+ping K41.com
+
 # 4. service bind9 restart 

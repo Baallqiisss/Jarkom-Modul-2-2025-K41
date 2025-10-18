@@ -157,7 +157,10 @@ menambahkan resolver 192.168.122.1 saat interfacenya aktif agar akses paket dari
 internet tersedia sejak awal. 
 
 ## Jawaban 
-``` echo "nameserver 192.168.122.1" > /etc/resolv.conf ```
+```c
+echo "nameserver 192.168.122.1" > /etc/resolv.conf
+```
+
 lalu tes salah satu node dari timur ke barat - barat ke timur
 
 ## No.4 

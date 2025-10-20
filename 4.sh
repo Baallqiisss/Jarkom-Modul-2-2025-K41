@@ -38,8 +38,8 @@ TTL    604800          ; Waktu cache default (detik)
 
 @       IN      NS      ns1.K41.com.
 @       IN      NS      ns2.K41.com.
-ns1     IN      A       10.84.2.7
-ns2     IN      A       10.84.2.5
+ns1     IN      A       10.84.2.5 #Tirion
+ns2     IN      A       10.84.2.7 #Valmar
 @       IN      A       10.84.2.1
 
 #Valmar
@@ -60,9 +60,13 @@ ping 10.15.43.32 5675
 
 nano /etc/resolv.conf
 
-nameserver 10.84.2.5
 nameserver 10.84.2.7
+<<<<<<< HEAD
 nameserver 192.168.122.1 #sirion
+=======
+nameserver 10.84.2.5
+nameserver 192.168.122.1
+>>>>>>> c3f5b4d (update)
 
 #tes
 ping K41.com

@@ -19,7 +19,7 @@ tokoh sesuai glosarium yang sudah diberikan.
 ## Jawaban 
 
 1. Node Eonwe 
-``` 
+```c
 auto eth0
 iface eth0 inet dhcp
 
@@ -42,7 +42,7 @@ echo "nameserver 192.168.122.1" > /etc/resolv.conf
 
 ```
 2. Earendil ( Barat )
-```
+```c
 auto eth0
 iface eth0 inet static
     address 10.84.1.2
@@ -51,7 +51,7 @@ iface eth0 inet static
     up echo nameserver 192.168.122.1 > /etc/resolv.conf
 ```
 3. Elwing ( Barat )
-```
+```c
 auto eth0
 iface eth0 inet static
     address 10.84.1.3
@@ -60,7 +60,7 @@ iface eth0 inet static
     up echo nameserver 192.168.122.1 > /etc/resolv.conf
 ```
 4. Cirdan ( Timur )
-```
+```c
 auto eth0
 iface eth0 inet static
     address 10.84.3.1
@@ -70,7 +70,8 @@ iface eth0 inet static
 ```
 
 5. Elrond ( Timur )
-``` auto eth0
+```c
+auto eth0
 iface eth0 inet static
     address 10.84.2.3
     netmask 255.255.255.0
@@ -79,7 +80,7 @@ iface eth0 inet static
 ```
 
 6. Maglor ( Timur )
-```
+```c
 auto eth0
 iface eth0 inet static
     address 10.84.2.4
@@ -89,7 +90,7 @@ iface eth0 inet static
 ```
 
 7. Sirion 
-```
+```c
 auto eth0
 iface eth0 inet static
     address 10.84.3.2
@@ -99,7 +100,7 @@ iface eth0 inet static
 ```
 
 8. Tirion
-```
+```c
 auto eth0
 iface eth0 inet static
     address 10.84.3.3
@@ -109,7 +110,7 @@ iface eth0 inet static
 ```
 
 9. Valmar
-```
+```c
 auto eth0
 iface eth0 inet static
     address 10.84.3.4
@@ -119,7 +120,7 @@ iface eth0 inet static
 ```
 
 10. Vingilot
-```
+```c
 auto eth0
 iface eth0 inet static
     address 10.84.3.6
@@ -129,7 +130,7 @@ iface eth0 inet static
 ```
 
 11. lindon
-```
+```c
 auto eth0
 iface eth0 inet static
     address 10.84.3.5
@@ -145,10 +146,14 @@ sehingga host di dalam dapat mencapai layanan di luar menggunakan IP address.
 ## Jawaban 
 tambahkan iptables
 
-``` up iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.84.0.0/16 ```   
+```c
+up iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.84.0.0/16
+```   
 
 lalu tes menggunakan
-``` ping google.com ```
+```c 
+ping google.com
+```
 
 ## No.3
 Kabar dari Barat menyapa Timur. Pastikan kelima klien dapat saling berkomunikasi 
@@ -174,3 +179,98 @@ notify dan allow-transfer ke Valmar, set forwarders ke 192.168.122.1. Di Valmar
 pada seluruh host non-router ubah urutan resolver menjadi IP dari ns1.<xxxx>.com → 
 ns2.<xxxx>.com → 192.168.122.1. Verifikasi query ke apex dan hostname layanan 
 dalam zona dijawab melalui ns1/ns2. 
+
+## Tirion
+```c
+apt update
+apt install bind9 -y
+ln -s /etc/init.d/named /etc/init.d/bind9
+```
+### /etc/bind/named.conf.options 
+```c
+options {
+                directory "/var/cache/bind";
+                dnssec-validation no;
+                forwarders {
+                        192.168.122.1;
+                };  
+                allow-query{any;};
+                auth-nxdomain no;
+                listen-on-v6 { any; };
+
+```
+### /etc/bind/named.conf.local
+```c
+zone "K41.com" {
+    type master:
+    also-nootify {10.84.2.7; }; 
+    allow-transfer { 10.84.2.7; };
+    file "/etc/bind/K41.com"; 
+};
+```
+### /etc/bind/K41.com
+```c
+TTL    604800          ; Waktu cache default (detik)
+@       IN      SOA     K41.com. root.K41.com. (
+                        2025100401 ; Serial (format YYYYMMDDXX)
+                        604800     ; Refresh (1 minggu)
+                        86400      ; Retry (1 hari)
+                        2419200    ; Expire (4 minggu)
+                        604800 )   ; Negative Cache TTL
+;
+
+@       IN      NS      ns1.K41.com.
+@       IN      NS      ns2.K41.com.
+ns1     IN      A       10.84.2.5 #Tirion
+ns2     IN      A       10.84.2.7 #Valmar
+@       IN      A       10.84.2.1
+
+```
+```c
+service bind9 restart
+```
+
+## Valmar
+```c
+apt update
+apt install bind9 -y
+ln -s /etc/init.d/named /etc/init.d/bind9
+```
+#### /etc/bind/named.conf.local
+```c
+zone "K41.com" {
+        type slave;
+        masters { 10.84.2.5; };
+        file "/etc/bind/K41.com";
+
+};
+```
+### /etc/bind/named.conf.options 
+```c
+options {
+                directory "/var/cache/bind";
+                dnssec-validation no;
+                forwarders {
+                        192.168.122.1;
+                };  
+                allow-query{any;};
+                auth-nxdomain no;
+                listen-on-v6 { any; };
+```
+```c
+ service bind9 restart
+```
+
+## All Node
+
+### nano /etc/resolv.conf
+```
+nameserver 10.84.2.5  
+nameserver 10.84.2.7  
+nameserver 192.168.122.1
+``` 
+
+### Tes
+```c
+ping K41.com
+```

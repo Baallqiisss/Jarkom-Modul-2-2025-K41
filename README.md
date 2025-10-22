@@ -156,6 +156,7 @@ lalu tes menggunakan
 ```c 
 ping google.com
 ```
+<img width="719" height="259" alt="Image" src="https://github.com/user-attachments/assets/66241116-2efe-4f6c-899e-b612b6d6b254" />
 
 ## No.3
 Kabar dari Barat menyapa Timur. Pastikan kelima klien dapat saling berkomunikasi 
@@ -171,7 +172,9 @@ echo "nameserver 192.168.122.1" > /etc/resolv.conf
 - Earendil
 ``` ping 10.84.3.7 ```
 - Cirdan
-``` 10.84.1.2 ``` 
+``` 10.84.1.2 ```
+
+<img width="560" height="186" alt="Image" src="https://github.com/user-attachments/assets/4107f62e-60f7-4a82-853c-7f27b6cce432" />
 
 ## No.4 
 Para penjaga nama naik ke menara, di Tirion (ns1/master) bangun zona <xxxx>.com 
@@ -279,6 +282,8 @@ nameserver 192.168.122.1
 ```c
 ping K41.com
 ```
+<img width="713" height="208" alt="Image" src="https://github.com/user-attachments/assets/e7377cf6-6bfd-4107-9929-efaf31a7d7b1" />
+
 ## no.5
 “Nama memberi arah,” kata Eonwe. Namai semua tokoh (hostname) sesuai glosarium, eonwe, earendil, elwing, cirdan, elrond, maglor, sirion, tirion, valmar, lindon, vingilot, dan verifikasi bahwa setiap host mengenali dan menggunakan hostname tersebut secara system-wide. Buat setiap domain untuk masing masing node sesuai dengan namanya (contoh: eru..com) dan assign IP masing-masing juga. Lakukan pengecualian untuk node yang bertanggung jawab atas ns1 dan ns2
 
@@ -299,7 +304,10 @@ vingilot IN     A       10.84.2.2
 ```
 ``` service bind9 restart ```
 ### Tes
-ping elwing.K41.com
+``` ping elwing.K41.com ```
+<img width="552" height="169" alt="Image" src="https://github.com/user-attachments/assets/2b197cf7-3f64-4508-aa34-1b05e06f153a" />
+
+
 
 ## No.6
 Lonceng Valmar berdentang mengikuti irama Tirion. Pastikan zone transfer berjalan, Pastikan Valmar (ns2) telah menerima salinan zona terbaru dari Tirion (ns1). Nilai serial SOA di keduanya harus sama
@@ -309,10 +317,14 @@ Lonceng Valmar berdentang mengikuti irama Tirion. Pastikan zone transfer berjala
 ```c
 dig @10.84.2.5 K41.com SOA
 ```
+<img width="722" height="399" alt="Image" src="https://github.com/user-attachments/assets/6dbe45be-2eb4-42fd-826c-4429d1faa180" />
+
 ## Cek SOA Record di Valmar (ns2):
 ```c
 dig @10.84.2.7 K41.com SOA
 ```
+<img width="723" height="289" alt="Image" src="https://github.com/user-attachments/assets/61ad08ac-ac8f-4283-85fd-a181271a008c" />
+
 
 ## No.7
 Peta kota dan pelabuhan dilukis. Sirion sebagai gerbang, Lindon sebagai web statis, Vingilot sebagai web dinamis. Tambahkan pada zona .com A record untuk sirion..com (IP Sirion), lindon..com (IP Lindon), dan vingilot..com (IP Vingilot). Tetapkan CNAME :

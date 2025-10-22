@@ -274,3 +274,44 @@ nameserver 192.168.122.1
 ```c
 ping K41.com
 ```
+## No.6
+Lonceng Valmar berdentang mengikuti irama Tirion. Pastikan zone transfer berjalan, Pastikan Valmar (ns2) telah menerima salinan zona terbaru dari Tirion (ns1). Nilai serial SOA di keduanya harus sama
+
+### Jawaban 
+## Cek SOA Record di Tirion (ns1)
+```c
+dig @10.84.2.5 K41.com SOA
+```
+## Cek SOA Record di Valmar (ns2):
+```c
+dig @10.84.2.7 K41.com SOA
+```
+
+## No.7
+Peta kota dan pelabuhan dilukis. Sirion sebagai gerbang, Lindon sebagai web statis, Vingilot sebagai web dinamis. Tambahkan pada zona .com A record untuk sirion..com (IP Sirion), lindon..com (IP Lindon), dan vingilot..com (IP Vingilot). Tetapkan CNAME :
+
+- www..com → sirion..com,  
+- static..com → lindon..com, dan   
+- app..com → vingilot..com.  
+
+Verifikasi dari dua klien berbeda bahwa seluruh hostname tersebut ter-resolve ke tujuan yang benar dan konsisten.
+
+### Jawaban 
+## Tirion 
+
+``` nano nano /etc/bind/K41.com ```
+```c
+www     IN      CNAME   sirion.k41.com.
+static  IN      CNAME   lindon.k41.com.
+app     IN      CNAME   vingilot.k41.com.
+```
+``` service bind9 restart ```
+
+### Tes 
+```c
+dig www.k41.com CNAME +short 
+dig app.k41.com CNAME +short 
+dig static.k41.com CNAME +short
+```
+
+

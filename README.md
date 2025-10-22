@@ -146,7 +146,7 @@ sehingga host di dalam dapat mencapai layanan di luar menggunakan IP address.
 Eonwe sebagai router harus bisa menghubungkan semua node internal ke internet.
 
 ## Jawaban 
-tambahkan iptables
+tambahkan iptables di Eonwe
 
 ```c
 up iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE -s 10.84.0.0/16

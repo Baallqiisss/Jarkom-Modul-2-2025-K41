@@ -336,9 +336,9 @@ app     IN      CNAME   vingilot.K41.com.
 
 ### Tes 
 ```c
-dig www.K41.com CNAME +short 
-dig app.K41.com CNAME +short 
-dig static.K41.com CNAME +short
+dig @10.84.2.9 www.K41.com A
+dig @10.84.2.3 static.K41.com A
+dig @10.84.2.2 app.K41.com A
 ```
 
 

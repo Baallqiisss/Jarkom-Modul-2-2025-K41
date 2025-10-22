@@ -167,8 +167,11 @@ internet tersedia sejak awal.
 ```c
 echo "nameserver 192.168.122.1" > /etc/resolv.conf
 ```
-
-lalu tes salah satu node dari timur ke barat - barat ke timur
+### Tes Barat - Timur
+- Earendil
+``` ping 10.84.3.7 ```
+- Cirdan
+``` 10.84.1.2 ``` 
 
 ## No.4 
 Para penjaga nama naik ke menara, di Tirion (ns1/master) bangun zona <xxxx>.com 
@@ -276,6 +279,28 @@ nameserver 192.168.122.1
 ```c
 ping K41.com
 ```
+## no.5
+“Nama memberi arah,” kata Eonwe. Namai semua tokoh (hostname) sesuai glosarium, eonwe, earendil, elwing, cirdan, elrond, maglor, sirion, tirion, valmar, lindon, vingilot, dan verifikasi bahwa setiap host mengenali dan menggunakan hostname tersebut secara system-wide. Buat setiap domain untuk masing masing node sesuai dengan namanya (contoh: eru..com) dan assign IP masing-masing juga. Lakukan pengecualian untuk node yang bertanggung jawab atas ns1 dan ns2
+
+### Jawaban 
+
+## Tirion 
+```c
+eonwe   IN      A       192.168.122.247
+earendil IN     A       10.84.1.2
+elwing   IN     A       10.84.1.3
+cirdan   IN     A       10.84.3.7
+elrond   IN     A       10.84.3.2
+maglor   IN     A       10.84.3.3
+sirion   IN     A       10.84.2.9
+lindon   IN     A       10.84.2.1
+vingilot IN     A       10.84.2.2
+
+```
+``` service bind9 restart ```
+### Tes
+ping elwing.K41.com
+
 ## No.6
 Lonceng Valmar berdentang mengikuti irama Tirion. Pastikan zone transfer berjalan, Pastikan Valmar (ns2) telah menerima salinan zona terbaru dari Tirion (ns1). Nilai serial SOA di keduanya harus sama
 
@@ -303,17 +328,17 @@ Verifikasi dari dua klien berbeda bahwa seluruh hostname tersebut ter-resolve ke
 
 ``` nano nano /etc/bind/K41.com ```
 ```c
-www     IN      CNAME   sirion.k41.com.
-static  IN      CNAME   lindon.k41.com.
-app     IN      CNAME   vingilot.k41.com.
+www     IN      CNAME   sirion.K41.com.
+static  IN      CNAME   lindon.K41.com.
+app     IN      CNAME   vingilot.K41.com.
 ```
 ``` service bind9 restart ```
 
 ### Tes 
 ```c
-dig www.k41.com CNAME +short 
-dig app.k41.com CNAME +short 
-dig static.k41.com CNAME +short
+dig www.K41.com CNAME +short 
+dig app.K41.com CNAME +short 
+dig static.K41.com CNAME +short
 ```
 
 

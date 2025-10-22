@@ -143,6 +143,8 @@ Angin dari luar mulai berhembus ketika Eonwe membuka jalan ke awan NAT. Pastikan
 jalur WAN di router aktif dan NAT meneruskan trafik keluar bagi seluruh alamat internal 
 sehingga host di dalam dapat mencapai layanan di luar menggunakan IP address. 
 
+Eonwe sebagai router harus bisa menghubungkan semua node internal ke internet.
+
 ## Jawaban 
 tambahkan iptables
 
